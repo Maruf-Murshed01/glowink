@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'catalog.dart';
@@ -6,8 +8,21 @@ import 'login.dart';
 import 'register.dart';
 import 'cart.dart';
 import 'admin_panel.dart';
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
+import 'firebase_options.dart';
+import 'firebase_config.dart';
 
-void main() {
+Future<void> main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: FirebaseConfig.platformOptions,
+    );
+    print('Firebase initialized successfully');
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+  }
   runApp(MyApp());
 }
 
@@ -34,9 +49,15 @@ class MyApp extends StatelessWidget {
       routes: {
         '/catalog': (context) => CatalogPage(),
         '/profile': (context) => ProfilePage(),
-        '/login': (context) => LoginPage(),
-        '/register': (context) => RegisterPage(),
+        '/login': (context) => LoginScreen(),
+        '/signup': (context) => SignupScreen(),
+        '/register': (context) => SignupScreen(),
         '/cart': (context) => CartPage(),
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => HomePage(),
+        );
       },
     );
   }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "362537266257",
+    "project_id": "glowink-f908a",
+    "storage_bucket": "glowink-f908a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362537266257:android:8b61d2a17fe614ef175c70",
+        "android_client_info": {
+          "package_name": "com.example.bduink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqPN7LIhws6Kd1enRnTCryHCsOKJwUYpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
