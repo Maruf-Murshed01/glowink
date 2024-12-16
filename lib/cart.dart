@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'models/cart_item.dart';
 import 'services/firestore_service.dart';
+import 'widgets/app_drawer.dart';
 
 class CartPage extends StatefulWidget {
+  const CartPage({Key? key}) : super(key: key);
+
   @override
-  _CartPageState createState() => _CartPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
 class _CartPageState extends State<CartPage> {
@@ -203,6 +206,7 @@ class _CartPageState extends State<CartPage> {
             ),
         ],
       ),
+      drawer: const AppDrawer(),
       body: cartItems.isEmpty
           ? Center(
               child: Column(

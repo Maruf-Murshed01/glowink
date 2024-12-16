@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'widgets/app_drawer.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   String userName = "John Doe";
   String userEmail = "johndoe@university.com";
   String userPhone = "+8801234567890";
-  String profilePicture =
-      'https://www.example.com/profile.jpg'; // Placeholder profile image
+  String profilePicture = 'https://www.example.com/profile.jpg';
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -19,7 +22,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    // Initialize the controllers with current user data
     _nameController.text = userName;
     _emailController.text = userEmail;
     _phoneController.text = userPhone;
@@ -31,26 +33,31 @@ class _ProfilePageState extends State<ProfilePage> {
       userEmail = _emailController.text;
       userPhone = _phoneController.text;
     });
-    // You can integrate backend to save the updated information here
   }
 
   void _updateProfilePicture() {
-    // Here, you can allow the user to update the profile picture by selecting an image from the gallery or camera
     setState(() {
-      profilePicture =
-      'https://www.example.com/new_profile.jpg'; // Placeholder for the new profile picture URL
+      profilePicture = 'https://www.example.com/new_profile.jpg';
     });
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('User Profile')),
+      appBar: AppBar(title: const Text('Profile')),
+      drawer: const AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            // Profile picture
             GestureDetector(
               onTap: _updateProfilePicture,
               child: CircleAvatar(
@@ -59,7 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             SizedBox(height: 20),
-            // User details form
             TextField(
               controller: _nameController,
               decoration: InputDecoration(labelText: 'Name'),
@@ -75,7 +81,6 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: InputDecoration(labelText: 'Phone'),
             ),
             SizedBox(height: 30),
-            // Save button
             ElevatedButton(
               onPressed: _saveProfile,
               child: Text('Save Profile'),

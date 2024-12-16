@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart'; // Import the cached_network_image package
+import 'package:firebase_auth/firebase_auth.dart';
+import 'widgets/app_drawer.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Welcome to Glowing Ink')),
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+          ),
+        ],
+      ),
+      drawer: const AppDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -18,14 +33,14 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => ImageViewPage(
                       imageUrl:
-                      'https://static.vecteezy.com/system/resources/previews/015/515/758/non_2x/bdu-letter-logo-design-on-black-background-bdu-creative-initials-letter-logo-concept-bdu-letter-design-vector.jpg',
+                          'https://static.vecteezy.com/system/resources/previews/015/515/758/non_2x/bdu-letter-logo-design-on-black-background-bdu-creative-initials-letter-logo-concept-bdu-letter-design-vector.jpg',
                     ),
                   ),
                 );
               },
               child: CachedNetworkImage(
                 imageUrl:
-                'https://static.vecteezy.com/system/resources/previews/015/515/758/non_2x/bdu-letter-logo-design-on-black-background-bdu-creative-initials-letter-logo-concept-bdu-letter-design-vector.jpg',
+                    'https://static.vecteezy.com/system/resources/previews/015/515/758/non_2x/bdu-letter-logo-design-on-black-background-bdu-creative-initials-letter-logo-concept-bdu-letter-design-vector.jpg',
                 imageBuilder: (context, imageProvider) => Container(
                   height: 150,
                   width: 150,
@@ -51,7 +66,8 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Browse Products'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.blue[900],
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue[900],
               ),
             ),
             SizedBox(height: 20),
@@ -61,7 +77,8 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Login'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.blue[900],
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue[900],
               ),
             ),
             SizedBox(height: 20),
@@ -71,7 +88,8 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Sign Up'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.blue[900],
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue[900],
               ),
             ),
           ],

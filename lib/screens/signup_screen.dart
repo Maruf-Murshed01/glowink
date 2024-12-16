@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
+  const SignupScreen({Key? key}) : super(key: key);
+
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
@@ -17,27 +19,17 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       try {
-        print('Attempting signup with email: ${_emailController.text}');
-        final result = await _authService.signUp(
+        await _authService.signUp(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        print('Signup successful: ${result?.user?.uid}');
-
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Signup successful!')),
-          );
-          Navigator.pushReplacementNamed(context, '/login');
+          Navigator.pushReplacementNamed(context, '/');
         }
       } catch (e) {
-        print('Signup error: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Error: ${e.toString()}'),
-              backgroundColor: Colors.red,
-            ),
+            SnackBar(content: Text(e.toString())),
           );
         }
       } finally {

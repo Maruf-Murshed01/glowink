@@ -12,6 +12,8 @@ import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'firebase_options.dart';
 import 'firebase_config.dart';
+import 'widgets/auth_wrapper.dart';
+import 'widgets/auth_guard.dart';
 
 Future<void> main() async {
   try {
@@ -27,13 +29,15 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Glowing Ink - University Shop',
-      debugShowCheckedModeBanner: false, // Remove debug banner
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.blue[900], // Blueish theme
+        primaryColor: Colors.blue[900],
         colorScheme: ColorScheme.light(
           primary: Colors.blue[900]!,
           secondary: Colors.white,
@@ -45,19 +49,14 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
-      home: HomePage(),
+      home: const AuthWrapper(),
       routes: {
-        '/catalog': (context) => CatalogPage(),
-        '/profile': (context) => ProfilePage(),
-        '/login': (context) => LoginScreen(),
-        '/signup': (context) => SignupScreen(),
-        '/register': (context) => SignupScreen(),
-        '/cart': (context) => CartPage(),
-      },
-      onUnknownRoute: (settings) {
-        return MaterialPageRoute(
-          builder: (context) => HomePage(),
-        );
+        '/catalog': (context) => AuthGuard(child: CatalogPage()),
+        '/profile': (context) => AuthGuard(child: ProfilePage()),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
+        '/register': (context) => const SignupScreen(),
+        '/cart': (context) => AuthGuard(child: CartPage()),
       },
     );
   }
