@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
           password: _passwordController.text.trim(),
         );
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/'); // Redirect to home
+          Navigator.pushReplacementNamed(context, '/');
         }
       } catch (e) {
         if (mounted) {
@@ -43,35 +43,122 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) =>
-                    value?.isEmpty ?? true ? 'Please enter email' : null,
+              // Logo or App Name
+              Icon(
+                Icons.shopping_bag,
+                size: 100,
+                color: Theme.of(context).primaryColor,
               ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) =>
-                    value?.isEmpty ?? true ? 'Please enter password' : null,
+              const SizedBox(height: 20),
+              Text(
+                'Welcome Back!',
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
-              SizedBox(height: 24),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _signIn,
-                      child: Text('Login'),
+              const SizedBox(height: 40),
+              // Auth Toggle
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextButton(
+                        onPressed: null,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/signup');
+                        },
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        prefixIcon: Icon(Icons.email),
+                      ),
+                      validator: (value) =>
+                          value?.isEmpty ?? true ? 'Please enter email' : null,
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        prefixIcon: Icon(Icons.lock),
+                      ),
+                      obscureText: true,
+                      validator: (value) => value?.isEmpty ?? true
+                          ? 'Please enter password'
+                          : null,
+                    ),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _signIn,
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: _isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text('Login'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
